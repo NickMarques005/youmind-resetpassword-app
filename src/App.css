@@ -1,0 +1,30 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 200;
+}
+
+.App {
+  text-align: center;
+}
+
+
+input:focus {
+  outline: none;
+  border-color: purple;
+  transition: 0.2s ease-in-out;
+}
+
+input:hover {
+  border-color: rgb(107, 0, 131);
+  transition: 0.3s ease-in-out;
+}
+
+
+

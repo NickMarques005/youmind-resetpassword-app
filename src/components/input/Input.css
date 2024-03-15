@@ -1,0 +1,9 @@
+.resetpass-input{
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #b12ff7;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #731577;
+}
