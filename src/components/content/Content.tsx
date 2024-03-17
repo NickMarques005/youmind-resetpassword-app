@@ -13,12 +13,13 @@ const Content: React.FC = () => {
     return (
         <div className="content-container">
             <div className="title-div">
-                <h2>Atualize sua senha abaixo</h2>
+                <h2>Redefina sua senha</h2>
+                <p>Por favor, insira sua nova senha abaixo</p>
             </div>
             <div className="inputs-button-div">
                 <div className="inputs-div">
-                    <Input placeholder="Nova Senha" type="password" />
-                    <Input placeholder="Confirmar Nova Senha" type="password" />
+                    <Input placeholder={"Nova Senha"} type={"password"} hasButton={true}/>
+                    <Input placeholder={"Confirmar Nova Senha"} type={"password"} hasButton={true} />
                 </div>
                 <div className="button-div">
                     <Button text="Enviar" buttonFunc={HandleSendNewPass}/>

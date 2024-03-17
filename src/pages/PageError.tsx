@@ -1,21 +1,27 @@
 import { useRouteError } from "react-router-dom";
+import Header from "../components/header/Header";
+import Logo from "../components/logo/LogoApp";
+import ErrorComponent from "../components/error/ErrorComponent";
+import { ApiErrorResponse, ErrorType, RouteError } from "../types/ServiceTypes";
 
-type ErrorType = {
-    message?: string;
-    statusText?: string;
+
+interface PageErrorProps {
+    api_errors?: ErrorType;
 }
 
-export default function ErrorPage() {
-    const error = useRouteError() as ErrorType;
-    console.error(error);
+const ErrorPage:React.FC<PageErrorProps> = ({ api_errors }) => {
+    const route_error = useRouteError() as ErrorType;
+    
+    if(route_error)
+    {
+        console.log(route_error);
+    }
+
+    console.log("API ERROR!: ", api_errors);
 
     return (
-        <div id="error-page">
-            <h1>Oops!</h1>
-            <p>Sorry, an unexpected error has occurred.</p>
-            <p>
-                <i>{error.statusText || error.message}</i>
-            </p>
-        </div>
+        <ErrorComponent error={api_errors || route_error}/>
     );
 }
+
+export default ErrorPage;
