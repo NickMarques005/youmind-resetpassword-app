@@ -1,0 +1,18 @@
+.error-message-main-div{
+    background: linear-gradient(rgb(136, 54, 54), rgb(203, 45, 45));
+    width: 100%;
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-message-main-div p{
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.close-error-div{
+    
+}

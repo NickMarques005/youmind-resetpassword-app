@@ -18,7 +18,7 @@
     font-size: 14px;
 }
 
-.inputs-button-div{
+.newpassword-form{
     width: 40%;
     height: 300px;
     display: flex;
@@ -34,19 +34,19 @@
 }
 
 @media screen and (max-width: 1150px) {
-    .inputs-button-div {
+    .newpassword-form {
         width: 60%;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .inputs-button-div {
+    .newpassword-form {
         width: 65%;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .inputs-button-div {
+    .newpassword-form {
         width: 85%;
     }
 

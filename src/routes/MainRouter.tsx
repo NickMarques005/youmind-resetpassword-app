@@ -5,13 +5,16 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import ErrorPage from '../pages/PageError';
+import { NewPasswordProvider } from '../providers/NewPasswordContext';
+import { QueryProvider } from '../providers/QueryContext';
+import { HandleErrorProvider } from '../providers/HandleErrorContext';
 
 const router = createBrowserRouter(
     [
         {
             path: "/reset-password",
             element: <PageResetPass />,
-            errorElement: <ErrorPage/>
+            errorElement: <ErrorPage />
         }
     ]
 )
@@ -19,7 +22,13 @@ const router = createBrowserRouter(
 const MainRouter: React.FC = () => {
     return (
         <>
-            <RouterProvider router={router} />
+            <HandleErrorProvider>
+                <QueryProvider>
+                    <NewPasswordProvider>
+                        <RouterProvider router={router} />
+                    </NewPasswordProvider>
+                </QueryProvider>
+            </HandleErrorProvider>
         </>
     )
 }

@@ -7,9 +7,11 @@ interface InputProps {
     placeholder?: string;
     type: string;
     hasButton: boolean;
+    name: string;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: React.FC<InputProps> = ({ placeholder, type, hasButton }) => {
+const Input: React.FC<InputProps> = ({ placeholder, type, hasButton, name, onChange }) => {
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPass = () => {
         setShowPassword(!showPassword);
@@ -17,7 +19,7 @@ const Input: React.FC<InputProps> = ({ placeholder, type, hasButton }) => {
 
     return (
         <div className="input-container">
-            <input className="resetpass-input" placeholder={placeholder} type={hasButton && type === 'password' ? (showPassword ? 'text' : 'password') : type} />
+            <input className="resetpass-input" placeholder={placeholder} type={hasButton && type === 'password' ? (showPassword ? 'text' : 'password') : type} name={name} onChange={onChange} />
             {
                 hasButton && (
                     <>
