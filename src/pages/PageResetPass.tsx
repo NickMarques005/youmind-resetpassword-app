@@ -10,6 +10,9 @@ import ErrorPage from './PageError';
 import { UseNewPassword } from '../providers/NewPasswordContext';
 import { UseHandleError } from '../providers/HandleErrorContext';
 import ErrorMessage from '../components/error/ErrorMessage';
+import SuccessPage from './PageSuccess';
+import { QueryParams, UseQueryParams } from '../providers/QueryContext';
+import Loading from '../components/loading/Loading';
 
 export interface PasswordsProps {
     newPassword: string;
@@ -20,8 +23,8 @@ export interface PasswordsProps {
 
 const PageResetPass: React.FC = () => {
     const location = useLocation();
-    const { errorMessage, setErrorMessage, verifying, setVerifying} = UseHandleError();
-    const { passwordState, setPasswordState } = UseNewPassword();
+    const { apiError, setApiError, errorMessage, resetSuccess, verifying, setVerifying } = UseHandleError();
+    const { HandleSetQueryParams } = UseQueryParams();
 
     const verifyToken = async () => {
 
@@ -34,10 +37,14 @@ const PageResetPass: React.FC = () => {
 
             if (!data.success) {
                 const showErrors = data.errors?.join(', ') || "Erro desconhecido";
-                setErrorMessage(showErrors);
+                setApiError(showErrors);
             }
 
             console.log(data);
+            HandleSetQueryParams({
+                token: token, 
+                id: id, 
+                type: type} as QueryParams);
 
             setVerifying(false);
 
@@ -47,15 +54,15 @@ const PageResetPass: React.FC = () => {
                 const { data } = error.response;
                 if (!data.success) {
                     const showErrors = data.errors?.join(', ') || "Erro desconhecido";
-                    console.log("SHOW ERROR: ",showErrors);
-                    setErrorMessage(showErrors);
+                    console.log("SHOW ERROR: ", showErrors);
+                    setApiError(showErrors);
                 }
+                setVerifying(false);
                 return console.log(error.response.data);
             }
             console.log("Erro ao verificar token: ", err);
             setVerifying(false);
         }
-
     }
 
     useEffect(() => {
@@ -65,21 +72,25 @@ const PageResetPass: React.FC = () => {
     return (
         <>
             {
-                errorMessage ?
-                    <div>
-                        <ErrorPage api_errors={errorMessage}/>
-                    </div>
+                resetSuccess ?
+                    <SuccessPage />
                     :
-                    verifying ?
-                    <>
-                    </>
-                    :
-                    <>
-                        <Header />
-                        <ErrorMessage/>
-                        <Content />
-                        <Footer />
-                    </>
+                    apiError ?
+                        <div>
+                            <ErrorPage api_errors={apiError} />
+                        </div>
+                        :
+                        verifying ?
+                            <>
+                                <Loading/>
+                            </>
+                            :
+                            <>
+                                <Header />
+                                <ErrorMessage errorMessage={errorMessage}/>
+                                <Content />
+                                <Footer />
+                            </>
             }
         </>
     )

@@ -15,4 +15,12 @@ export interface ApiErrorResponse {
     }
 }
 
+export interface AxiosError {
+    message?: string;
+    response?: {
+        data: ApiResponse;
+    };
+    status?: number;
+}
+
 export type ErrorType = RouteError | string;

@@ -5,18 +5,26 @@ interface ErrorMessageProps {
     errorMessage?: string;
 }
 
-const ErrorMessage:React.FC<ErrorMessageProps> = ({ errorMessage }) => {
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ errorMessage }) => {
     return (
-        <div className="error-message-main-div">
-            <p>
-                {
-                    errorMessage || "Houve um erro desconhecido"
-                }
-            </p>
-            <div className="close-error-div">
+        <>
+            
+            {
+                errorMessage ?
+                <div className="error-message-main-div">
+                <p>
+                    {
+                        errorMessage
+                    }
+                </p>
+                <div className="close-error-div">
 
+                </div>
             </div>
-        </div>
+
+            : ""
+            }
+        </>
     )
 }
 

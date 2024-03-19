@@ -1,10 +1,14 @@
 import React from 'react';
 
-const Container = () => {
+interface ContainerProps {
+    children: React.ReactNode;
+}
+
+const Container:React.FC<ContainerProps> = ({children}) => {
 
     return (
             <div className="container-main">
-                
+                {children}
             </div>
     )
 }

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
-interface QueryParams {
+export interface QueryParams {
     token: string | null;
     id: string | null;
     type: string | null;

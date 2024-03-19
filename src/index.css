@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+h1 {
+  color: #741b8a; 
+  text-align: center;
+}
+
 h2 {
   color: #4a148c; 
   text-align: center;

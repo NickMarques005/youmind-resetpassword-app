@@ -1,0 +1,29 @@
+.success-main-div{
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    background: linear-gradient(rgba(116, 68, 204, 0.529), rgba(174, 100, 206, 0.307), transparent, transparent);
+}
+
+.success-info-div{
+    padding: 15px 20px;
+
+}
+
+.success-info-div h1{
+    font-size: 36px;
+}
+
+.success-info-div h2{
+    opacity: 0.7;
+}
+
+.success-container{
+
+}
+
+.success-confirmation-div{
+
+}

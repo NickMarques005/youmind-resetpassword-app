@@ -5,15 +5,15 @@ import "./Content.css";
 import { UseNewPassword } from '../../providers/NewPasswordContext';
 import axios from 'axios';
 import { UseQueryParams } from '../../providers/QueryContext';
+import { UseHandleError } from '../../providers/HandleErrorContext';
+import { ApiErrorResponse, ApiResponse } from '../../types/ServiceTypes';
 
 
 const Content: React.FC = () => {
 
     const { passwordState, setPasswordState } = UseNewPassword();
     const { queryParams } = UseQueryParams();
-    const HandleSendNewPass = (pass: string) => {
-        console.log("Nova senha: ", pass);
-    }
+    const { errorMessage, setErrorMessage, setResetSuccess, setVerifying } = UseHandleError();
 
     const HandleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -22,31 +22,61 @@ const Content: React.FC = () => {
     }
 
     const HandleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        console.log("HANDLE SUBMIT!");
         event.preventDefault();
         const {newPassword, confirmNewPassword } = passwordState;
-        if(newPassword.trim.length < 8 || newPassword.trim.length > 25){
-            console.log("Erro ao redefinir senha: Precisa ser entre 8 à 25 caracteres!");
-            return 
+    
+        if(newPassword.trim().length < 8 || newPassword.trim().length > 25){
+            const msg = "Erro ao redefinir senha: Precisa ser entre 8 à 25 caracteres!";
+            console.log(msg);
+            return setErrorMessage(msg);
         }
 
         if(newPassword !== confirmNewPassword)
         {
-            return console.log("Erro ao redefinir senha: As senhas precisam ser iguais!")
+            const msg = "Erro ao redefinir senha: As senhas precisam ser iguais!"
+            console.log(msg);
+            return setErrorMessage(msg);
         }
 
         try{
+            setVerifying(true);
             const {token, id, type} = queryParams;
+            console.log(queryParams);
+            if(!token || !id || !type) return setErrorMessage("Houve um erro parametros não especificados!");
 
-            if(!token || !id || !type) return console.log("Houve um erro parametros não especificados!", queryParams);
-
-            const { data } = await axios.post(
+            const response = await axios.post<ApiResponse>(
                 `${process.env.REACT_APP_API_URL}reset-password?token=${token}&id=${id}&type=${type}`,
                 { password: newPassword }
             )
+
+            console.log(response);
+
+            if(!response.data.success)
+            {
+                const showErrors = response.data.errors?.join(', ') || "Erro desconhecido";
+                setErrorMessage(showErrors);
+                return;
+            }
+
+            setVerifying(false);
+            setResetSuccess(true);
         }
         catch (err)
         {
-            console.log(err);
+            const error = err as ApiErrorResponse;
+            if (error.response?.data) {
+                const { data } = error.response;
+                if (!data.success) {
+                    const showErrors = data.errors?.join(', ') || "Erro desconhecido";
+                    console.log("SHOW ERROR: ", showErrors);
+                    setErrorMessage(showErrors);
+                }
+                setVerifying(false);
+                return console.log(error.response.data);
+            }
+            console.log("Erro ao verificar token: ", err);
+            setVerifying(false);
         }
     }
 
@@ -57,16 +87,15 @@ const Content: React.FC = () => {
                 <h2>Redefina sua senha</h2>
                 <p>Por favor, insira sua nova senha abaixo</p>
             </div>
-            <form className="newpassword-form">
+            <form onSubmit={HandleSubmit} className="newpassword-form">
                 <div className="inputs-div">
                     <Input placeholder={"Nova Senha"} type={"password"} hasButton={true} name={"newPassword"} onChange={HandleOnChange}/>
                     <Input placeholder={"Confirmar Nova Senha"} type={"password"} hasButton={true} name={"confirmNewPassword"} onChange={ HandleOnChange } />
                 </div>
                 <div className="button-div">
-                    <Button text="Enviar" buttonFunc={HandleSendNewPass}/>
+                    <Button text="Enviar" buttonFunc={undefined} type={"submit"}/>
                 </div>
             </form>
-
         </div>
     )
 }

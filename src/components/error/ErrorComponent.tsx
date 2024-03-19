@@ -1,4 +1,3 @@
-import { useRouteError } from "react-router-dom";
 import Logo from "../logo/LogoApp";
 import "./ErrorComponent.css";
 import { ApiErrorResponse, ErrorType, RouteError } from "../../types/ServiceTypes";
