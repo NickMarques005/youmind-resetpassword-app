@@ -1,6 +1,6 @@
-import Logo from "../logo/LogoApp";
 import "./ErrorComponent.css";
-import { ApiErrorResponse, ErrorType, RouteError } from "../../types/ServiceTypes";
+import { ApiErrorResponse, ErrorType, RouteError } from "../../types/ResponseTypes";
+import Logo from "../logo/LogoApp";
 
 interface ErrorProps {
     error: ErrorType;
@@ -11,7 +11,7 @@ const ErrorComponent: React.FC<ErrorProps> = ({ error }) => {
 
     return (
         <div className="error-main-div" id="error-page">
-            <Logo />
+            <Logo error={true}/>
             <div className="error-content-div">
                 <h1>Oops!</h1>
                 <div className="error-div">

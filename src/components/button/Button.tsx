@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { CSSProperties, StyleHTMLAttributes } from 'react';
 import { ReactNode } from 'react';
 import './Button.css';
-
-interface ButtonProps {
+import { PuffLoader } from 'react-spinners';
+interface ButtonProps extends React.InputHTMLAttributes<HTMLButtonElement> {
     text: string;
     buttonFunc?: (data?: any) => void;
     children?: ReactNode;
     type?: "submit" | "reset" | "button";
+    loading?: boolean;
+    loaderColor?: string;
+    loaderStyle?: CSSProperties;
+    loaderSize?: number;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, text, buttonFunc, type }) => {
+const Button: React.FC<ButtonProps> = ({ children, text, buttonFunc, type, loading, loaderColor, loaderStyle, loaderSize, ...props }) => {
 
     const HandleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (buttonFunc && type !== 'submit') {
@@ -19,11 +23,16 @@ const Button: React.FC<ButtonProps> = ({ children, text, buttonFunc, type }) => 
 
     return (
         <div className="button_container">
-            <button onClick={ HandleClick } type={type}>
+            <button {...props} onClick={ HandleClick } type={type}>
                 {
+                    loading ? 
+                    <PuffLoader size={loaderSize} color={loaderColor} aria-label="Loading Spinner" cssOverride={loaderStyle} />
+                    :
+                    (
                     text != "" ?
                         <p className="text-button">{text}</p>
                         : children
+                    )
                 }
             </button>
         </div>

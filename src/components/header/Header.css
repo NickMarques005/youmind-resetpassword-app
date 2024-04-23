@@ -1,7 +1,24 @@
 .header-app {
+    display: flex;
+    position: absolute;
+    top: 0;
+    z-index: 2;
     background: linear-gradient(0deg, #9020bc, #de51eb);
-    padding: 20px;
-    text-align: center;
+    height: 15vh;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     box-shadow: 0 8px 10px 0 rgba(206, 84, 213, 0.305), 0 6px 60px 0 rgba(77, 7, 85, 0.19);
+}
+
+@media screen and (min-height: 1300px) {
+
+    .header-app{
+    }
+}
+
+@media (max-width: 768px) {
+
+    .header-app {
+    }
 }

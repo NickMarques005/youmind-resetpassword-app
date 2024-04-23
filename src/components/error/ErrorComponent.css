@@ -9,11 +9,17 @@
     background: linear-gradient(rgba(68, 37, 126, 0.529), rgba(101, 51, 122, 0.307), transparent, transparent);
 }
 
+.error-div{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 25px;
+}
+
 .error-content-div{
     display: flex;
     flex-direction: column;
     gap: 15px;
-    
 }
 
 .error-content-div h1{

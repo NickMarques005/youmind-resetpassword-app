@@ -1,0 +1,8 @@
+.title-div{
+    padding-inline: 15px;
+}
+
+.title-div p{
+    color: rgba(140, 61, 140, 0.472);
+    font-size: 14px;
+}

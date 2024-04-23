@@ -1,26 +1,13 @@
-export interface ApiResponse {
-    success: boolean;
-    errors?: string[];
+import { SetLoading } from "./LoadingTypes";
+
+export interface VerifyTokenServiceProps {
+    setLoading: SetLoading
 }
 
-export interface RouteError {
-    message?: string;
-    statusText?: string;
+export interface ResetPasswordServiceProps {
+    setLoading: (loading: boolean) => void;
 }
 
-export interface ApiErrorResponse {
-    response?: {
-        data: ApiResponse;
-        status: number;
-    }
-}
+export interface ResetPasswordServiceProps {
 
-export interface AxiosError {
-    message?: string;
-    response?: {
-        data: ApiResponse;
-    };
-    status?: number;
 }
-
-export type ErrorType = RouteError | string;

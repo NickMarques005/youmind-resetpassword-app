@@ -17,7 +17,6 @@ export const QueryProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const [queryParams, setQueryParams] = useState<QueryParams>({ token: null, id: null, type: null });
 
     const HandleSetQueryParams = (params: QueryParams) => {
-        console.log("Query params: ", params);
         setQueryParams(params);
     }
 

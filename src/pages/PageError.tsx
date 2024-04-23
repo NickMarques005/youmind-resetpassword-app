@@ -2,7 +2,8 @@ import { useRouteError } from "react-router-dom";
 import Header from "../components/header/Header";
 import Logo from "../components/logo/LogoApp";
 import ErrorComponent from "../components/error/ErrorComponent";
-import { ApiErrorResponse, ErrorType, RouteError } from "../types/ServiceTypes";
+import { ApiErrorResponse, ErrorType, RouteError } from "../types/ResponseTypes";
+import { useEffect } from "react";
 
 
 interface PageErrorProps {
@@ -12,12 +13,9 @@ interface PageErrorProps {
 const ErrorPage:React.FC<PageErrorProps> = ({ api_errors }) => {
     const route_error = useRouteError() as ErrorType;
     
-    if(route_error)
-    {
-        console.log(route_error);
-    }
-
-    console.log("API ERROR!: ", api_errors);
+    useEffect(() => {
+        console.error(route_error);
+    }, [route_error]);
 
     return (
         <ErrorComponent error={api_errors || route_error}/>

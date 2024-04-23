@@ -1,7 +1,8 @@
 .content-container{
     display: flex;
     flex-direction: column;
-    height: 60vh;
+    min-height: 60vh;
+    width: 100%;
     align-items: center;
     justify-content: center;
     padding: 3%;
@@ -9,50 +10,9 @@
     margin: 5% 0 0 0;
 }
 
-.title-div{
-    padding-inline: 15px;
-}
-
-.title-div p{
-    color: rgba(140, 61, 140, 0.472);
-    font-size: 14px;
-}
-
-.newpassword-form{
-    width: 40%;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-}
-
-.inputs-div {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-@media screen and (max-width: 1150px) {
-    .newpassword-form {
-        width: 60%;
-    }
-}
-
 @media screen and (max-width: 768px) {
-    .newpassword-form {
-        width: 65%;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .newpassword-form {
-        width: 85%;
-    }
 
     .content-container{
         margin: 15% 0 0 0;
     }
-
-    
 }

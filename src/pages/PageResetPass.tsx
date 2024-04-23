@@ -1,73 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Content from '../components/content/Content';
 import Footer from '../components/footer/Footer';
 import Header from '../components/header/Header';
-import { useLocation } from 'react-router-dom';
-import queryString from 'query-string';
-import axios from 'axios';
-import { ApiErrorResponse, ApiResponse } from '../types/ServiceTypes';
 import ErrorPage from './PageError';
-import { UseNewPassword } from '../providers/NewPasswordContext';
 import { UseHandleError } from '../providers/HandleErrorContext';
 import ErrorMessage from '../components/error/ErrorMessage';
 import SuccessPage from './PageSuccess';
-import { QueryParams, UseQueryParams } from '../providers/QueryContext';
 import Loading from '../components/loading/Loading';
+import { UseTokenVerification } from '../hooks/UseTokenVerification';
+import { UseSubmitNewPassword } from '../hooks/UseSubmitNewPassword';
+import { UseLoading } from '../hooks/UseLoading';
+import Form from '../components/form/Form';
+import Title from '../components/title/Title';
+import UseForm from '../hooks/UseForm';
+import Container from '../components/container/Container';
+import { ContainerMainStyle } from '../components/container/ContainerMain';
+import { ContainerInfoStyle } from '../components/container/ContainerInfo';
 
 export interface PasswordsProps {
     newPassword: string;
     confirmNewPassword: string;
 }
 
-
-
 const PageResetPass: React.FC = () => {
-    const location = useLocation();
-    const { apiError, setApiError, errorMessage, resetSuccess, verifying, setVerifying } = UseHandleError();
-    const { HandleSetQueryParams } = UseQueryParams();
+    const { apiError, errorMessage, resetSuccess, verifying } = UseHandleError();
+    UseTokenVerification();
+    const { loading, setLoading } = UseLoading();
+    const { SubmitNewPassword } = UseSubmitNewPassword(setLoading);
+    const { values, HandleChange, HandleSubmit } = UseForm({
+        initialValues: { newPassword: '', confirmNewPassword: '' },
+        onSubmit: SubmitNewPassword
+    })
 
-    const verifyToken = async () => {
-
-        try {
-            const { token, id, type } = queryString.parse(location.search)
-            const api_url = process.env.REACT_APP_API_URL;
-            console.log(api_url);
-            console.log(location.search);
-            const { data } = await axios.get<ApiResponse>(`${api_url}verifyPassToken?token=${token}&id=${id}&type=${type}`);
-
-            if (!data.success) {
-                const showErrors = data.errors?.join(', ') || "Erro desconhecido";
-                setApiError(showErrors);
-            }
-
-            console.log(data);
-            HandleSetQueryParams({
-                token: token, 
-                id: id, 
-                type: type} as QueryParams);
-
-            setVerifying(false);
-
-        } catch (err) {
-            const error = err as ApiErrorResponse;
-            if (error.response?.data) {
-                const { data } = error.response;
-                if (!data.success) {
-                    const showErrors = data.errors?.join(', ') || "Erro desconhecido";
-                    console.log("SHOW ERROR: ", showErrors);
-                    setApiError(showErrors);
-                }
-                setVerifying(false);
-                return console.log(error.response.data);
-            }
-            console.log("Erro ao verificar token: ", err);
-            setVerifying(false);
-        }
-    }
-
-    useEffect(() => {
-        verifyToken();
-    }, []);
+    const style_main = ContainerMainStyle();
+    const style_info = ContainerInfoStyle();
 
     return (
         <>
@@ -75,22 +41,27 @@ const PageResetPass: React.FC = () => {
                 resetSuccess ?
                     <SuccessPage />
                     :
-                    apiError ?
-                        <div>
-                            <ErrorPage api_errors={apiError} />
-                        </div>
+                    verifying ?
+                        <>
+                            <Loading />
+                        </>
                         :
-                        verifying ?
+                        apiError ?
                             <>
-                                <Loading/>
+                                <ErrorPage api_errors={apiError} />
                             </>
                             :
-                            <>
+                            <Container style={style_main}>
                                 <Header />
-                                <ErrorMessage errorMessage={errorMessage}/>
-                                <Content />
-                                <Footer />
-                            </>
+                                <Container style={style_info}>
+                                    <ErrorMessage errorMessage={errorMessage} />
+                                    <Content>
+                                        <Title title="Redefina sua senha" subtitle="Por favor, insira sua nova senha abaixo" />
+                                        <Form formData={values} onChange={HandleChange} onSubmit={HandleSubmit} loading={loading} />
+                                    </Content>
+                                    <Footer />
+                                </Container>
+                            </Container>
             }
         </>
     )

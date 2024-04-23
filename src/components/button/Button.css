@@ -6,6 +6,7 @@ button {
     color: white;
     cursor: pointer;
     font-weight: bold;
+    min-height: 65px;
 }
 
 button:hover {
@@ -18,4 +19,11 @@ button p {
     color: white;
     font-size:medium;
     text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+
+    button p {
+        font-size: 18px;
+    }
 }

@@ -1,0 +1,33 @@
+.form {
+    width: 40%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+}
+
+.inputs-div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+@media screen and (max-width: 1150px) {
+    .form {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .form {
+        width: 65%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .form {
+        width: 85%;
+    }
+
+}
