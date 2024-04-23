@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { UseHandleError } from '../providers/HandleErrorContext';
 import { UseQueryParams } from '../providers/QueryContext';
 import { SetLoading } from '../types/LoadingTypes';
@@ -14,7 +13,7 @@ export const UseSubmitNewPassword = (setLoading: SetLoading) => {
         if(!newPassword || !confirmNewPassword ) return "Preencha todos os campos para poder resetar sua senha";
         
         if (newPassword  !== confirmNewPassword ) return "As senhas precisam ser iguais!";
-        else if (newPassword .length < 8 || newPassword.length > 25) return "A senha precisa ter entre 8 e 25 caracteres.";
+        else if (newPassword.length < 8 || newPassword.length > 25) return "A senha precisa ter entre 8 e 25 caracteres.";
             
         return true;
     }

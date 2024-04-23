@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { MakeRequest } from './Request';
 import { QueryParameter } from '../types/Query';
 

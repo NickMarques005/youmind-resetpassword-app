@@ -1,4 +1,4 @@
-import React, { CSSProperties, StyleHTMLAttributes } from 'react';
+import React, { CSSProperties } from 'react';
 import { ReactNode } from 'react';
 import './Button.css';
 import { PuffLoader } from 'react-spinners';
@@ -29,7 +29,7 @@ const Button: React.FC<ButtonProps> = ({ children, text, buttonFunc, type, loadi
                     <PuffLoader size={loaderSize} color={loaderColor} aria-label="Loading Spinner" cssOverride={loaderStyle} />
                     :
                     (
-                    text != "" ?
+                    text !== "" ?
                         <p className="text-button">{text}</p>
                         : children
                     )

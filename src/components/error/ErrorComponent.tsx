@@ -1,5 +1,5 @@
 import "./ErrorComponent.css";
-import { ApiErrorResponse, ErrorType, RouteError } from "../../types/ResponseTypes";
+import { ErrorType, RouteError } from "../../types/ResponseTypes";
 import Logo from "../logo/LogoApp";
 
 interface ErrorProps {

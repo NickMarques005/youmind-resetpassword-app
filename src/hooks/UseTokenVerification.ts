@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { UseQueryParams } from '../providers/QueryContext';
 import { UseHandleError } from '../providers/HandleErrorContext';
 import queryString from 'query-string';

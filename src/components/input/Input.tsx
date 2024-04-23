@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './Input.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import Button from '../button/Button';
-import { InputType } from 'zlib';
 import { Loading } from '../../types/LoadingTypes';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {

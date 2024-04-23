@@ -1,8 +1,6 @@
 import { useRouteError } from "react-router-dom";
-import Header from "../components/header/Header";
-import Logo from "../components/logo/LogoApp";
 import ErrorComponent from "../components/error/ErrorComponent";
-import { ApiErrorResponse, ErrorType, RouteError } from "../types/ResponseTypes";
+import { ErrorType } from "../types/ResponseTypes";
 import { useEffect } from "react";
 
 
