@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { ApiResponse, ApiErrorResponse } from '../types/ResponseTypes';
-import { QueryParameter } from '../types/Query';
 import queryString from 'query-string';
 
 export type REQUEST_METHOD = 'GET' | 'POST' | 'PUT' | 'DELETE';

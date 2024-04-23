@@ -15,12 +15,7 @@
     font-weight: bold;
 }
 
-.close-error-div {}
-
 @media screen and (max-width: 480px) {
-    .error-message-main-div {
-        
-    }
 
     .error-message-main-div p {
         font-size: 14px;
