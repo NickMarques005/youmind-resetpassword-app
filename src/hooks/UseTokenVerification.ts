@@ -8,13 +8,13 @@ import { useLocation } from 'react-router-dom';
 export const UseTokenVerification = () => {
     const location = useLocation();
     const { HandleSetQueryParams } = UseQueryParams();
-    const { setApiError, setErrorMessage, setVerifying } = UseHandleError();
+    const { setApiError, setVerifying } = UseHandleError();
     const { performVerifyToken } = VerifyTokenService();
 
     const VerifyToken = useCallback(async (token?: string, id?: string, type?: string) => {
         setVerifying(true);
         try {
-            if (!token || !id || !type) return setErrorMessage("Parametros de Query inválidos para resetar a senha");
+            if (!token || !id || !type) return setApiError("Parametros de Query inválidos para resetar a senha");
             const data = await performVerifyToken(token, id, type);
             HandleSetQueryParams({ token, id, type });
             if (!data.success) {
@@ -26,7 +26,7 @@ export const UseTokenVerification = () => {
         } finally {
             setVerifying(false);
         }
-    }, [performVerifyToken, setVerifying, setErrorMessage, HandleSetQueryParams, setApiError]);
+    }, [performVerifyToken, setVerifying, HandleSetQueryParams, setApiError]);
 
 
     useEffect(() => {
