@@ -3,14 +3,14 @@ import { MakeRequest } from './Request';
 
 export const ResetPasswordService = () => {
     
-    const performResetPassword = useCallback(async (newPassword: string, token: string, id: string, type: string) => {
+    const performResetPassword = useCallback(async (newPassword: string, token: string, user: string) => {
         try {
             const endpoint = "auth/reset-password";
             const response = await MakeRequest({
                 endpoint: endpoint,
                 method: 'POST',
                 data: { password: newPassword },
-                queryParams: { token, id, type}
+                queryParams: { token, user}
             });
 
             if (!response.success) {

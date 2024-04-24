@@ -2,8 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export interface QueryParams {
     token: string | null;
-    id: string | null;
-    type: string | null;
+    user: string | null;
 }
 
 interface QueryContextType {
@@ -14,7 +13,7 @@ interface QueryContextType {
 const QueryContext = createContext<QueryContextType | undefined>(undefined);
 
 export const QueryProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [queryParams, setQueryParams] = useState<QueryParams>({ token: null, id: null, type: null });
+    const [queryParams, setQueryParams] = useState<QueryParams>({ token: null, user: null });
 
     const HandleSetQueryParams = (params: QueryParams) => {
         setQueryParams(params);

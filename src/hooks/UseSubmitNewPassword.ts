@@ -27,9 +27,9 @@ export const UseSubmitNewPassword = (setLoading: SetLoading) => {
 
         setLoading(true);
         try {
-            const { token, id, type } = queryParams;
-            if (!token || !id || !type) return setErrorMessage("Parametros de Query inválidos para resetar a senha");
-            const data = await performResetPassword(newPassword, token, id, type);
+            const { token, user } = queryParams;
+            if (!token || !user) return setErrorMessage("Parametros de Query inválidos para resetar a senha");
+            const data = await performResetPassword(newPassword, token, user);
 
             if (data.success) {
                 setResetSuccess(true);

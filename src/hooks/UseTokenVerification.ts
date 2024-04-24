@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { UseQueryParams } from '../providers/QueryContext';
 import { UseHandleError } from '../providers/HandleErrorContext';
 import queryString from 'query-string';
@@ -10,13 +10,15 @@ export const UseTokenVerification = () => {
     const { HandleSetQueryParams } = UseQueryParams();
     const { setApiError, setVerifying } = UseHandleError();
     const { performVerifyToken } = VerifyTokenService();
+    const [prevToken, setPrevToken] = useState<string | undefined>(undefined);
+    const [prevUser, setPrevUser] = useState<string | undefined>(undefined);
 
-    const VerifyToken = useCallback(async (token?: string, id?: string, type?: string) => {
+    const VerifyToken = useCallback(async (token?: string, user?: string) => {
         setVerifying(true);
         try {
-            if (!token || !id || !type) return setApiError("Parametros de Query inválidos para resetar a senha");
-            const data = await performVerifyToken(token, id, type);
-            HandleSetQueryParams({ token, id, type });
+            if (!token || !user) return setApiError("Parametros de Query inválidos para resetar a senha");
+            const data = await performVerifyToken(token, user);
+            HandleSetQueryParams({ token, user });
             if (!data.success) {
                 setApiError(data.error || "Erro desconhecido");
             }
@@ -30,12 +32,16 @@ export const UseTokenVerification = () => {
 
 
     useEffect(() => {
-        const { token, id, type } = queryString.parse(location.search);
+        const queryParams = queryString.parse(location.search);
+        const { token, user } = queryParams;
         const safeToken = typeof token === 'string' ? token : undefined;
-        const safeId = typeof id === 'string' ? id : undefined;
-        const safeType = typeof type === 'string' ? type : undefined;
-        VerifyToken(safeToken, safeId, safeType);
-    }, [VerifyToken, location.search]);
+        const safeUser = typeof user === 'string' ? user : undefined;
+        if (safeToken && safeUser && (safeToken !== prevToken || safeUser !== prevUser)) {
+            VerifyToken(safeToken, safeUser);
+            setPrevToken(safeToken);
+            setPrevUser(safeUser);
+        }
+    }, [VerifyToken, location.search, prevToken, prevUser]);
 
     return;
 };
